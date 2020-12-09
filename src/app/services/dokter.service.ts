@@ -33,10 +33,10 @@ export class DokterService {
   ];
 
   private dokterCollect:AngularFirestoreCollection<Dokter>;
-  private fsPasien:Observable<Dokter[]>;
+  private fsDokter:Observable<Dokter[]>;
   constructor(private afs:AngularFirestore) { 
     this.dokterCollect = this.afs.collection<Dokter>('dokter');
-    this.fsPasien = this.dokterCollect.snapshotChanges().pipe(
+    this.fsDokter = this.dokterCollect.snapshotChanges().pipe(
       map(changes => {
           return changes.map(a => {
               const data = a.payload.doc.data();
@@ -49,16 +49,16 @@ export class DokterService {
   }
 
   listDokter(): Observable<Dokter[]> {
-    return this.fsPasien;
+    return this.fsDokter;
   }
 
 
   listaDokter(id: string): Observable<Dokter> {
     return this.dokterCollect.doc<Dokter>(id).valueChanges().pipe(
       take(1),
-      map(pasien=>{
-        pasien.id = id;
-        return pasien;
+      map(dokter=>{
+        dokter.id = id;
+        return dokter;
       })
     ) 
 }

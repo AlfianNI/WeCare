@@ -13,7 +13,7 @@ import { DokterService } from 'src/app/services/dokter.service';
 })
 export class DetailPage implements OnInit {
   loadedPasien: Pasien;
-  private FBdokter:Observable<Dokter[]>;
+  loadedDokter: Dokter;
   constructor(
       private activatedRoute: ActivatedRoute,
       private pasienSrv: PasienService,
@@ -31,7 +31,6 @@ export class DetailPage implements OnInit {
     if(id){
       this.pasienSrv.listaPasien(id).subscribe(pasien => {
         this.loadedPasien = pasien;
-        this.FBdokter = this.dokterSrv.listDokter();
       });
 
     }
