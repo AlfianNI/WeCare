@@ -16,14 +16,6 @@ const routes: Routes = [
     loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
   },
   {
-    path: 'home-page',
-    loadChildren: () => import('./home-page/home-page.module').then( m => m.HomePagePageModule)
-  },
-  {
-    path: 'monitor-pasien',
-    loadChildren: () => import('./monitor-pasien/monitor-pasien.module').then( m => m.MonitorPasienPageModule)
-  },
-  {
     path: 'pasien',
     loadChildren: () => import('./pasien/pasien.module').then( m => m.PasienPageModule)
   },
