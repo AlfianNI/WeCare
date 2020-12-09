@@ -15,7 +15,7 @@ export class PasienService {
       tempat_lahir: 'Balikpapan',
       tanggal_lahir: '30 Januari 1986',
       nama_dokter: 'Luis',
-      suhu_badan: 36.4
+      suhu_badan: Math.floor(Math.random()*38.5) + 35.5
     },
     {
       id_pasien: 'p002',
@@ -26,7 +26,7 @@ export class PasienService {
       tempat_lahir: 'Kupang',
       tanggal_lahir: '17 September 1990',
       nama_dokter: 'Sulaiman',
-      suhu_badan: 37.0
+      suhu_badan: Math.floor(Math.random()*38.5) + 35.5
     },
     {
       id_pasien: 'p003',
@@ -37,7 +37,7 @@ export class PasienService {
       tempat_lahir: 'Medan',
       tanggal_lahir: '05 Juni 1992',
       nama_dokter: 'Kristianto',
-      suhu_badan : 38.0
+      suhu_badan : Math.floor(Math.random()*38.5) + 35.5
     }
   ];
   constructor() { }
