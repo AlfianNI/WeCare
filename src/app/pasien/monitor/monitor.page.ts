@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import {Pasien} from '../../models/pasien.model';
 import {PasienService} from '../../services/pasien.service';
 
@@ -9,10 +10,12 @@ import {PasienService} from '../../services/pasien.service';
 })
 export class MonitorPage implements OnInit {
   pasiens: Pasien[];
-  constructor(private pasienSrv: PasienService) { }
+  private fbPasien:Observable<Pasien[]>;
+  constructor(private pasiensSrv: PasienService) { }
 
   ngOnInit() {
-    this.pasiens = this.pasienSrv.getAllPasiens();
+    this.fbPasien = this.pasiensSrv.listPasien();
+    this.pasiens = this.pasiensSrv.getAllPasiens();
   }
 
 }

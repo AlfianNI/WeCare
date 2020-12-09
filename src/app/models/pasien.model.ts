@@ -1,5 +1,6 @@
 export interface Pasien {
     // Info Pasien
+    id?:any;
     id_pasien: string;
     nama_pasien: string;
     ruangan_perawatan: string;

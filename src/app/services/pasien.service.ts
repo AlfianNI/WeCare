@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import {Pasien} from '../models/pasien.model';
+import {map,take} from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +43,43 @@ export class PasienService {
       suhu_badan : Math.floor(Math.random()*38.5) + 35.5
     }
   ];
-  constructor() { }
+
+  private pasienCollect:AngularFirestoreCollection<Pasien>;
+  private fsPasien:Observable<Pasien[]>;
+  constructor(private afs:AngularFirestore) { 
+    this.pasienCollect = this.afs.collection<Pasien>('pasien');
+    this.fsPasien = this.pasienCollect.snapshotChanges().pipe(
+      map(changes => {
+          return changes.map(a => {
+              const data = a.payload.doc.data();
+              const id = a.payload.doc.id;
+              return {id,...data};
+          });
+      })
+  );
+
+  }
+
+  listPasien(): Observable<Pasien[]> {
+    return this.fsPasien;
+  }
+
+
+  listaPasien(id: string): Observable<Pasien> {
+    return this.pasienCollect.doc<Pasien>(id).valueChanges().pipe(
+      take(1),
+      map(pasien=>{
+        pasien.id = id;
+        return pasien;
+      })
+    ) 
+}
+
+updatePasien(pasien:Pasien): Promise<void>{
+  return this.pasienCollect.doc(pasien.id).update({suhu_badan:pasien.suhu_badan});
+}
+
+
 
   getAllPasiens(){
     return [...this.pasiens];
