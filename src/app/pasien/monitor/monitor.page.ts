@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import {Pasien} from '../../models/pasien.model';
 import {PasienService} from '../../services/pasien.service';
@@ -11,11 +12,15 @@ import {PasienService} from '../../services/pasien.service';
 export class MonitorPage implements OnInit {
   pasiens: Pasien[];
   private fbPasien:Observable<Pasien[]>;
-  constructor(private pasiensSrv: PasienService) { }
+  constructor(private pasiensSrv: PasienService, private router:Router) { }
 
   ngOnInit() {
     this.fbPasien = this.pasiensSrv.listPasien();
     this.pasiens = this.pasiensSrv.getAllPasiens();
+  }
+
+  goToDetail(id:string){
+    this.router.navigate(['./',id]);
   }
 
 }

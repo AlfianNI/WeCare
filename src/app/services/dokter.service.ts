@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 import {Dokter} from '../models/page-dokter.model';
 
 @Injectable({
@@ -28,7 +31,37 @@ export class DokterService {
       imageUrl: 'https://st.depositphotos.com/2702761/3304/i/600/depositphotos_33044395-stock-photo-doctor-smiling.jpg'
     }
   ];
-  constructor() { }
+
+  private dokterCollect:AngularFirestoreCollection<Dokter>;
+  private fsPasien:Observable<Dokter[]>;
+  constructor(private afs:AngularFirestore) { 
+    this.dokterCollect = this.afs.collection<Dokter>('dokter');
+    this.fsPasien = this.dokterCollect.snapshotChanges().pipe(
+      map(changes => {
+          return changes.map(a => {
+              const data = a.payload.doc.data();
+              const id = a.payload.doc.id;
+              return {id,...data};
+          });
+      })
+  );
+
+  }
+
+  listDokter(): Observable<Dokter[]> {
+    return this.fsPasien;
+  }
+
+
+  listaDokter(id: string): Observable<Dokter> {
+    return this.dokterCollect.doc<Dokter>(id).valueChanges().pipe(
+      take(1),
+      map(pasien=>{
+        pasien.id = id;
+        return pasien;
+      })
+    ) 
+}
 
   getAllDokters(){
     return [...this.dokters];

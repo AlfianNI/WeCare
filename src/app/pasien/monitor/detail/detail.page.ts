@@ -22,13 +22,20 @@ export class DetailPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe( paramMap => {
-      if (!paramMap.has('pasienId')) { return; }
-      const pasienId = paramMap.get('pasienId');
-      this.pasienSrv.listaPasien(pasienId).subscribe(pasien=>{
+    // this.activatedRoute.paramMap.subscribe( paramMap => {
+    //   if (!paramMap.has('pasienId')) { return; }
+    //   const pasienId = paramMap.get('pasienId');
+    //   this.pasienSrv.listaPasien(pasienId).subscribe(pasien=>{
+    //     this.loadedPasien = pasien;
+    //   })
+    // });
+
+    let id = this.activatedRoute.snapshot.paramMap.get('pasienId');
+    if(id){
+      this.pasienSrv.listaPasien(id).subscribe(pasien => {
         this.loadedPasien = pasien;
       })
-    });
+    }
   }
 
   goToMonitor(){

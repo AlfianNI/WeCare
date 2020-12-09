@@ -17,7 +17,7 @@ export class PasienService {
       imageUrl: 'https://cdn.zmescience.com/wp-content/uploads/2018/05/169764_web.jpg',
       tempat_lahir: 'Balikpapan',
       tanggal_lahir: '30 Januari 1986',
-      nama_dokter: 'Luis',
+      nama_dokter: 'd003',
       suhu_badan: Math.floor(Math.random()*38.5) + 35.5
     },
     {
