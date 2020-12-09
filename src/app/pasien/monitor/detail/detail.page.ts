@@ -5,6 +5,7 @@ import {PasienService} from '../../../services/pasien.service';
 import {Dokter} from '../../../models/page-dokter.model';
 import { Observable } from 'rxjs';
 import { ToastController } from '@ionic/angular';
+import { DokterService } from 'src/app/services/dokter.service';
 
 @Component({
   selector: 'app-detail',
@@ -14,11 +15,13 @@ import { ToastController } from '@ionic/angular';
 export class DetailPage implements OnInit {
   loadedPasien: Pasien;
   private fbPasien:Observable<Pasien>;
+  loadedDokter:Dokter;
   constructor(
       private activatedRoute: ActivatedRoute,
       private pasienSrv: PasienService,
       private toastCtrl:ToastController,
-      private router:Router
+      private router:Router,
+      private dokterSrv:DokterService
   ) { }
 
   ngOnInit() {
@@ -36,10 +39,24 @@ export class DetailPage implements OnInit {
         this.loadedPasien = pasien;
       })
     }
+    this.dokterSrv.listaDokter(this.loadedPasien.nama_dokter).subscribe(dokter=>{
+      this.loadedDokter = dokter;
+    })
   }
 
   goToMonitor(){
     this.router.navigate(['/pasien/tab/monitor']);
+  }
+
+  showToast(msg){
+    this.toastCtrl.create({
+      message:msg,
+      duration:3000
+    }).then(toast=>toast.present());
+  }
+
+  emergency(){
+    this.showToast(['Calling Doctor ',this.loadedDokter.nama_dokter,' to Room ',this.loadedPasien.ruangan_perawatan])
   }
 
 }
