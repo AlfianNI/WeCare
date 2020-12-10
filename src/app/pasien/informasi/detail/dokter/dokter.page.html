@@ -31,20 +31,18 @@
         <ion-item>
             <ion-label>DAFTAR PASIEN :</ion-label>
         </ion-item>
-        <!-- <ion-list *ngFor="let pasien of (fbPasien | async)" [routerLink]="['./', pasien.id_pasien]">
-            <ion-item *ngIf="pasien.nama_dokter.includes(loadedDokter.id)" color="danger">
-                <ion-thumbnail slot="start">
-                    <ion-img [src]="pasien.imageUrl"></ion-img>
-                </ion-thumbnail>
-                <ion-label>
-                    <h1>{{ pasien.nama_pasien }}</h1>
-                    <h3>R.{{ pasien.ruangan_perawatan }}</h3>
-                </ion-label>
-            </ion-item>
-        </ion-list> -->
-
-
-
-
+    </ion-list>
+</ion-content>
+<ion-content>
+    <ion-list>
+        <ion-item *ngFor="let pasien of (fbPasien | async)">
+            <ion-thumbnail slot="start">
+                <ion-img [src]="pasien.imageUrl"></ion-img>
+            </ion-thumbnail>
+            <ion-label>
+                <h1>{{ pasien.nama_pasien }}</h1>
+                <h3>R.{{ pasien.ruangan_perawatan }}</h3>
+            </ion-label>
+        </ion-item>
     </ion-list>
 </ion-content>
