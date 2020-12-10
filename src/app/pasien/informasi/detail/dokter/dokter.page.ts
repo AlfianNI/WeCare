@@ -15,7 +15,7 @@ export class DokterPage implements OnInit {
   loadedDokter:Dokter;
   private fbPasien:Observable<Pasien[]>;
   constructor(private activatedRoute: ActivatedRoute, 
-    private dokterSrv:DokterService,private pasienSrv:PasienService, private router:Router) { }
+    private dokterSrv:DokterService,private pasiensSrv:PasienService, private router:Router) { }
 
   ngOnInit() {
 
@@ -23,7 +23,7 @@ export class DokterPage implements OnInit {
     if(id){
       this.dokterSrv.listaDokter(id).subscribe(dokter => {
         this.loadedDokter = dokter;
-        
+        this.fbPasien = this.pasiensSrv.listPasien();
       });
 
     }

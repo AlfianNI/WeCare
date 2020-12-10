@@ -1,11 +1,11 @@
 <ion-header>
-    <ion-toolbar>
+    <ion-toolbar color="primary">
         <ion-title class="ion-text-center">Informasi Pasien</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <ion-list>
+    <ion-list color="secondary">
         <ion-item *ngFor="let pasien of (fbPasien | async)" [routerLink]="['./', pasien.id_pasien]">
             <ion-thumbnail slot="start">
                 <ion-img [src]="pasien.imageUrl"></ion-img>
