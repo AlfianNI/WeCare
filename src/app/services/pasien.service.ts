@@ -75,9 +75,11 @@ export class PasienService {
     ) 
 }
 
-updatePasien(pasien:Pasien): Promise<void>{
-  return this.pasienCollect.doc(pasien.id).update({suhu_badan:pasien.suhu_badan});
+updateSuhu(pasien:Pasien,suhu:number): Promise<void>{
+  return this.pasienCollect.doc(pasien.id).update({suhu_badan:suhu});
 }
+
+
 
 
 

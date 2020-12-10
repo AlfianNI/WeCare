@@ -4,7 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {PasienService} from '../../../services/pasien.service';
 import {Dokter} from '../../../models/page-dokter.model';
 import { Observable } from 'rxjs';
-import { ToastController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import { DokterService } from 'src/app/services/dokter.service';
 
 @Component({
@@ -16,12 +16,14 @@ export class DetailPage implements OnInit {
   loadedPasien: Pasien;
   private fbPasien:Observable<Pasien>;
   loadedDokter:Dokter;
+  suhu:number=0;
   constructor(
       private activatedRoute: ActivatedRoute,
       private pasienSrv: PasienService,
       private toastCtrl:ToastController,
       private router:Router,
-      private dokterSrv:DokterService
+      private dokterSrv:DokterService,
+      private alertCtrl:AlertController
   ) { }
 
   ngOnInit() {
@@ -48,15 +50,34 @@ export class DetailPage implements OnInit {
     this.router.navigate(['/pasien/tab/monitor']);
   }
 
-  showToast(msg){
-    this.toastCtrl.create({
-      message:msg,
-      duration:3000
-    }).then(toast=>toast.present());
+  async showToast(){
+    const alert = await this.alertCtrl.create({
+      header:'EMERGENCY',
+      message:'Doctors Go to The Room'
+      // ,
+      // buttons:[{
+      //   text:'Cancel',
+      //   role:'cancel'
+      // },{
+      //   text:'Yes',
+      //   handler: () => this.router.navigate(['/admin'])
+      // }]
+    });
+    await alert.present();
   }
 
   emergency(){
-    this.showToast(['Calling Doctor ',this.loadedDokter.nama_dokter,' to Room ',this.loadedPasien.ruangan_perawatan])
+    
+    this.showToast();
+  }
+
+  ionViewWillEnter(){
+    this.suhu = this.randomSuhu();
+    this.pasienSrv.updateSuhu(this.loadedPasien,this.suhu);
+  }
+
+  randomSuhu() {
+    return Math.floor(Math.random() * (39.3 - 36.1 + 1)) + 36.1;
   }
 
 }

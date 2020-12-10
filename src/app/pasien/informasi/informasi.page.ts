@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import {Pasien} from '../../models/pasien.model';
 import {PasienService} from '../../services/pasien.service';
 
+
 @Component({
   selector: 'app-informasi',
   templateUrl: './informasi.page.html',

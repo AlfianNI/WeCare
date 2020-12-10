@@ -44,7 +44,7 @@
         </ion-row>
         <ion-row>
             <ion-col>
-                <ion-button color="danger" *ngIf="loadedPasien.suhu_badan > 37.2">EMERGENCY</ion-button>
+                <ion-button color="danger" *ngIf="loadedPasien.suhu_badan > 37.2" (click)="emergency()">EMERGENCY</ion-button>
             </ion-col>
         </ion-row>
 
